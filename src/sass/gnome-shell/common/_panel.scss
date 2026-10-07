@@ -11,6 +11,15 @@ $panel_height: $menuitem_size;
   $panel_height: $menuitem_size + 4px;
 }
 
+// Tahoe panel is slightly taller to echo macOS 26's roomier menu bar
+@if $tahoe == 'true' and $panel_size == 'default' {
+  $panel_height: $menuitem_size + 2px;
+}
+
+// Tahoe pill radius for panel buttons / clock pill
+$panel_bt_radius: if($tahoe == 'true', $circular_radius, $bt_radius);
+$panel_bt_hpadding: if($tahoe == 'true', 14px, 12px);
+
 #panel.login-screen {
   @if $scale != 'default' {
     @include fontsize($base_font_size * 2 - 2);
@@ -73,12 +82,12 @@ $panel_height: $menuitem_size;
 %apple_activites {
   -natural-hpadding: $base_padding * 2;
   background-image: url("assets/activities.svg");
-  background-position: center center;
+  background-position: 50% 50%;
   background-size: 24px 24px;
   width: 24px;
   height: 24px;
   color: transparent;
-  font-size: 0;
+  font-size: 0px;
 
   > * { width: $medium_size; }
 
@@ -116,6 +125,28 @@ $panel_height: $menuitem_size;
   height: $panel_height !important;
   box-shadow: 0 5px 16px rgba(black, 0.05);
 
+  // Tahoe: glass strip. Lower-opacity translucent surface + inset top highlight
+  // (the bright "shine" line of Apple's glass) + soft outer shadow.
+  // For real backdrop blur, install the Blur my Shell extension and enable it
+  // on the top panel — this surface is tuned to read as glass when blurred.
+  @if $tahoe == 'true' {
+    // GNOME Shell St CSS limitations:
+    //   - single shadow per box-shadow (no inset + outer combo)
+    //   - no -apple-system / system-ui generic font families
+    //   - background-gradient rendering is inconsistent; a solid translucent
+    //     background reads cleanest as a glass strip.
+    // !important is required to beat Yaru-dark's `#panel { background-color:
+    // #131313 !important }` that Ubuntu layers on top of user themes when
+    // color-scheme is prefer-dark.
+    background-color: if($variant == 'light', rgba(white, 0.30), rgba(black, 0.28)) !important;
+    background-gradient-direction: none;
+    border-image: none;
+    border-bottom: 1px solid if($variant == 'light', rgba(black, 0.10), rgba(white, 0.06));
+    box-shadow: 0 2px 10px 0 rgba(black, 0.20) !important;
+    color: if($variant == 'light', black, white) !important;
+    font-family: "SF Pro Display", "SF Pro Text", "Inter", "Ubuntu", Cantarell, Sans-Serif;
+  }
+
   // the rounded outset corners
   .panel-corner {
     -panel-corner-radius: $panel-corner-radius;
@@ -124,15 +155,27 @@ $panel_height: $menuitem_size;
     -panel-corner-border-color: transparent;
     -panel-corner-opacity: 1;
     transition-duration: 250ms;
+
+    @if $tahoe == 'true' {
+      -panel-corner-radius: 0;
+      -panel-corner-background-color: transparent;
+    }
   }
 
   // panel menus
   .panel-button {
-    -natural-hpadding: 12px;
-    -minimum-hpadding: 12px;
+    -natural-hpadding: $panel_bt_hpadding;
+    -minimum-hpadding: $panel_bt_hpadding;
     color: $panel_fg;
     transition-duration: 150ms;
-    border-radius: $bt_radius;
+    border-radius: $panel_bt_radius;
+
+    // Tahoe: force panel-button color to beat Yaru-dark's white color
+    // override when color-scheme flips to prefer-dark while using Light theme
+    // (and vice versa). Makes the theme immune to Ubuntu's auto light/dark.
+    @if $tahoe == 'true' {
+      color: if($variant == 'light', black, white) !important;
+    }
 
     StLabel {
       padding: 0;
@@ -201,7 +244,7 @@ $panel_height: $menuitem_size;
       .clock {
         // transition-duration: 150ms;
         border: none;
-        border-radius: $bt_radius;
+        border-radius: $panel_bt_radius;
         background-color: transparent;
         box-shadow: none;
         padding: 0 $base_padding + 12px !important;
@@ -232,7 +275,7 @@ $panel_height: $menuitem_size;
     .system-status-icon {
       icon-size: $base_icon_size;
       padding: $base_padding;
-      margin: 0;
+      margin: if($tahoe == 'true', 0 $base_margin, 0);
     }
 
     // .panel-status-menu-box .system-status-icon { margin: 0; }

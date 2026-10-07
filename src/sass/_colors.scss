@@ -259,6 +259,13 @@ $panel_fg:                          if($trans == 'true' and $panel_font == 'whit
 $panel_track:                       if(($trans == 'false' or $panel_font == 'black') and $variant == 'light', rgba(black, 0.15), rgba(white, 0.28));
 $panel_divider:                     if(($trans == 'false' or $panel_font == 'black') and $variant == 'light', rgba(black, 0.08), rgba(white, 0.15));
 
+// Tahoe: text follows variant (black in Light, white in Dark); stronger hover/active
+@if $tahoe == 'true' {
+  $panel_fg:                        if($variant == 'light', black, white);
+  $panel_track:                     if($variant == 'light', rgba(black, 0.22), rgba(white, 0.32));
+  $panel_divider:                   if($variant == 'light', rgba(black, 0.14), rgba(white, 0.22));
+}
+
 $dash_fg:                           if($variant == 'light', black, white);
 $dash_bg:                           if($variant == 'light', rgba(#d1d1d1, $panel_opacity + 0.33), rgba(if($darker == 'true', #1f1f1f, #222222), $panel_opacity/2 + 0.6));
 

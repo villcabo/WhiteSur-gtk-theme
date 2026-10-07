@@ -33,6 +33,7 @@ usage() {
 #  helpify "-s, --size"                    "[$(IFS='|'; echo "${SIDEBAR_SIZE_VARIANTS[*]}")]"  "  Set Nautilus (version < 40.0) sidebar minimum width" "Default is 200px"
 
   helpify "-m, --monterey"                ""                                                  "  Set to MacOS Monterey style"                     ""
+  helpify "-T, --tahoe"                   ""                                                  "  Set to MacOS Tahoe (Liquid Glass) style"         "Transparent panel, pill buttons, roomier popovers"
   helpify "-N, --nautilus"                "[$(IFS='|'; echo "${NAUTILUS_STYLE_VARIANTS[*]}")]" "  Set Nautilus style"                             "Default is BigSur-like style (stabled sidebar)"
   helpify "-l, --libadwaita"              ""                                                  "  Install theme into gtk4.0 config for libadwaita" "Default is dark version"
   helpify "-f, --fixed"                   ""                                                  "  Install fixed accent color version"              "Default is adaptive version"
@@ -128,6 +129,8 @@ while [[ $# -gt 0 ]]; do
       compact="false"; shift ;;
     -m|--monterey)
       monterey="true"; shift ;;
+    -T|--tahoe)
+      tahoe="true"; shift ;;
     -l|--libadwaita)
       libadwaita="true"; shift ;;
     -f|--fixed)

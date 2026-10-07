@@ -827,4 +827,10 @@ finalize_argument_parsing() {
   elif [[ "${has_any_error}" == "true" ]]; then
     echo; prompt -i "Try '$0 --help' for more information."; echo; exit 1
   fi
+
+  # Tahoe installs under a distinct name so it coexists with standard WhiteSur
+  if [[ "${tahoe}" == 'true' ]]; then
+    name="${THEME_NAME}-Tahoe"
+    theme_name="${name}"
+  fi
 }

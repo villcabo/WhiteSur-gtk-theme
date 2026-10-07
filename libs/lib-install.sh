@@ -401,7 +401,7 @@ install_shelly() {
     mv -f "assets/no-notifications.svg" "no-notifications.svg"
   )
 
-  if [[ "${black_font:-}" == 'true' || "${opacity}" == '-solid' ]] && [[ "${color}" == '-Light' ]]; then
+  if [[ "${black_font:-}" == 'true' || "${opacity}" == '-solid' || "${tahoe:-}" == 'true' ]] && [[ "${color}" == '-Light' ]]; then
     cp -r "${THEME_SRC_DIR}/assets/gnome-shell/activities-black/activities${icon}.svg"        "${TARGET_DIR}/assets/activities.svg"
   fi
 }
@@ -1199,6 +1199,14 @@ customize_theme() {
     prompt -s "Changing to Monterey style ...\n"
     sed $SED_OPT "/\$monterey/s/false/true/"                                    "${THEME_SRC_DIR}/sass/_theme-options-temp.scss"
     sed $SED_OPT "/\$panel_opacity/s/0.15/0.5/"                                 "${THEME_SRC_DIR}/sass/_theme-options-temp.scss"
+  fi
+
+  # Enable Tahoe (macOS 26 "Liquid Glass") style
+  if [[ "${tahoe}" == 'true' ]]; then
+    prompt -s "Changing to Tahoe (Liquid Glass) style ...\n"
+    sed $SED_OPT "/\$tahoe/s/false/true/"                                       "${THEME_SRC_DIR}/sass/_theme-options-temp.scss"
+    # Tahoe's menu bar is fully transparent by default
+    sed $SED_OPT "/\$panel_opacity/s/0.15/0/"                                   "${THEME_SRC_DIR}/sass/_theme-options-temp.scss"
   fi
 
   # Change panel font color
