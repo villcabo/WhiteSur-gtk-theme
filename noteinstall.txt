@@ -1,0 +1,12 @@
+bash install.sh -n WhiteSur -m -N stable -l --shell -i apple -h bigger --round --blackfont
+
+bash install.sh --monterey --nautilus stable --libadwaita --round --roundedmaxwindow --black --blackfont --shell -h bigger -i kali
+bash install.sh --monterey --nautilus stable --libadwaita --round --roundedmaxwindow --black --blackfont --shell -h bigger -i apple
+bash install.sh --monterey --nautilus stable --libadwaita --round --roundedmaxwindow --black --blackfont --shell -h bigger -i debian
+bash install.sh --monterey --nautilus stable --libadwaita --round --roundedmaxwindow --black --blackfont --shell -h bigger -i ubuntu
+bash install.sh --monterey --nautilus stable --libadwaita --round --roundedmaxwindow --black --blackfont --shell -h bigger -i gnome
+bash install.sh --monterey --nautilus stable --libadwaita --round --roundedmaxwindow --black --blackfont --shell -h bigger -i arch
+bash install.sh --monterey --nautilus stable --libadwaita --round --roundedmaxwindow --black --blackfont --shell -h bigger -i zorin
+
+
+bash install.sh -T --nautilus stable --libadwaita --round --roundedmaxwindow --black --blackfont --shell -h bigger -i ubuntu
